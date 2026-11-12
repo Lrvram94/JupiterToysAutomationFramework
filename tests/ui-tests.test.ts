@@ -1,18 +1,18 @@
 import { test, expect } from '@playwright/test';
+import { testData } from '../src/data/test-data';
+import { ContactPage } from '../src/pages/ContactPage';
+import { HomePage } from '../src/pages/HomePage';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
+test('Test Case 1 - Test Contact form validation errors', async ({ page }) => {
+  const homePage = new HomePage(page);
+  const contactPage = new ContactPage(page);
+  await page.goto(testData.urls.home);
+  await contactPage.contactLink.click();
+  await expect(page).toHaveURL(testData.urls.contact);
+  await contactPage.submitButton.click();
+  await expect(contactPage.forenameError).toBeVisible();
+  await expect(contactPage.emailError).toBeVisible();
+  await expect(contactPage.messageError).toBeVisible();
+  await expect(contactPage.generalError).toBeVisible(); 
 });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
