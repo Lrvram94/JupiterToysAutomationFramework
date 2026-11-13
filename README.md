@@ -118,13 +118,3 @@ To run manually, open the repository's **Actions** tab, select **Playwright Test
 Playwright uses one worker and two retries in CI, and rejects `test.only`. Locally, retries are disabled by default.
 
 The pipeline does not yet run separate type/lint checks or explicitly repeat Test Case 2 five times. Retries do not replace independent repetitions.
-
-## Known gaps
-
-- Test Case 1 still needs to fill mandatory fields and verify that validation errors disappear.
-- Test Case 3's title is still contact-related, although its implementation tests shopping and cart calculations.
-- Cart quantities are verified indirectly through expected subtotals, not directly through quantity inputs.
-- The unit-price assertion needs `.toFixed(2)` formatting to support values such as `12.50`, which currently become `$12.5`. Subtotals already use two-decimal formatting.
-- Some locators remain inline in tests, and setup is repeated rather than shared through fixtures or `beforeEach`.
-
-If a browser executable is missing, run the relevant Playwright install command. If a test fails, inspect the HTML report before changing expected values or increasing timeouts.

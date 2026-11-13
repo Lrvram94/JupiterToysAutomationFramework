@@ -37,7 +37,7 @@ test('Test Case 2 - Test successful contact form submission', async ({
   ).toBeVisible({ timeout: 30_000 });
 });
 
-test('Test Case 3 - Test contact form with missing forename', async ({
+test('Test Case 3 - Test shopping cart functionality', async ({
   page,
 }) => {
   //steps to follow
