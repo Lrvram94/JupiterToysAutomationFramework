@@ -4,10 +4,6 @@ import { testData } from '../data/test-data';
 export class ContactPage {
   constructor(protected readonly page: Page) {}
 
-  get contactLink() {
-    return this.page.getByRole('link', { name: 'Contact' });
-  }
-
   get forenameTextbox() {
     return this.page.getByRole('textbox', { name: 'Forename *' });
   }
@@ -19,7 +15,7 @@ export class ContactPage {
   get messageTextbox() {
     return this.page.getByRole('textbox', { name: 'Message *' });
   }
-  
+
   get submitButton() {
     return this.page.getByRole('link', { name: 'Submit' });
   }
@@ -32,13 +28,11 @@ export class ContactPage {
     return this.page.locator('#email-err');
   }
 
-  get messageError() {
+  get messageTextBoxError() {
     return this.page.locator('#message-err');
   }
 
   get generalError() {
     return this.page.getByText(testData.errorMessage.general);
-
   }
 }
-  

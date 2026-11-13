@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "nodenext",
     "target": "esnext",
-    "types": ["node"],                  // was []
+    "types": ["node"], // was []
     "lib": ["esnext"],
 
     "sourceMap": true,
@@ -14,12 +14,12 @@
 
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": false,       // was true
+    "verbatimModuleSyntax": false, // was true
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "noEmit": true                       // added
+    "noEmit": true // added
   },
   "include": ["playwright.config.ts", "tests/**/*.ts", "src/**/*.ts"]
 }
