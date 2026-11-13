@@ -111,7 +111,9 @@ Biome uses two-space indentation and single quotes. Generated reports are exclud
 
 ## CI
 
-[GitHub Actions](./.github/workflows/playwright.yml) runs on pushes and pull requests targeting `main` or `master`. It installs dependencies and browsers on Ubuntu, runs the configured suite, and uploads the HTML report with 30-day retention.
+[GitHub Actions](./.github/workflows/playwright.yml) supports manual runs as well as pushes and pull requests targeting `main` or `master`. It installs dependencies and browsers on Ubuntu, runs the configured suite, and uploads the HTML report with 30-day retention.
+
+To run manually, open the repository's **Actions** tab, select **Playwright Tests**, click **Run workflow**, select a branch, and confirm. The manual trigger must first be pushed to the repository's default branch.
 
 Playwright uses one worker and two retries in CI, and rejects `test.only`. Locally, retries are disabled by default.
 
