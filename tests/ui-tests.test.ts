@@ -40,11 +40,11 @@ test('Test Case 2 - Test successful contact form submission', async ({
 test('Test Case 3 - Test shopping cart functionality', async ({
   page,
 }) => {
-  //steps to follow
   const homePage = new HomePage(page);
   await page.goto(testData.urls.home);
   const shopPage = new ShopPage(page);
   await homePage.shopLink.click();
+  // Add products to the cart
   for (const product of testData.products) {
     for (let i = 0; i < product.quantity; i++) {
       await shopPage.buyProduct(product.name).click();
@@ -79,3 +79,4 @@ test('Test Case 3 - Test shopping cart functionality', async ({
   const totalText = await shopPage.cartTotal.innerText();
   expect(Number(totalText.replace('Total: ', ''))).toBeCloseTo(sumOfSubtotals);
 });
+ 
