@@ -33,26 +33,24 @@ test('Test Case 1 - Test Contact form validation errors', async ({ page }) => {
   await expect(contactPage.generalError).not.toBeVisible();
 });
 
-test.describe('Test Case 2 - Test successful contact form submission', () => {
-  for (let i = 1; i <= 5; i++) {
-    test(`Run ${i}`, async ({ page }) => {
-      const homePage = new HomePage(page);
-      const contactPage = new ContactPage(page);
-      const contact = createContactDetails();
-      await page.goto(testData.urls.home);
-      await homePage.contactLink.click();
-      await expect(page).toHaveURL(testData.urls.contact);
-      await contactPage.forenameTextbox.fill(contact.forename);
-      await contactPage.emailTextbox.fill(contact.email);
-      await contactPage.messageTextbox.fill(contact.message);
-      await contactPage.submitButton.click();
-      await expect(
-        page.getByText(
-          testData.successMessage.replace('{forename}', contact.forename),
-        ),
-      ).toBeVisible({ timeout: 30_000 });
-    });
-  }
+Array.from({ length: 5 }, (_, i) => i + 1).forEach((runNumber) => {
+  test(`Test Case 2 - Test successful contact form submission (Run ${runNumber})`, async ({ page }) => {
+    const homePage = new HomePage(page);
+    const contactPage = new ContactPage(page);
+    const contact = createContactDetails();
+    await page.goto(testData.urls.home);
+    await homePage.contactLink.click();
+    await expect(page).toHaveURL(testData.urls.contact);
+    await contactPage.forenameTextbox.fill(contact.forename);
+    await contactPage.emailTextbox.fill(contact.email);
+    await contactPage.messageTextbox.fill(contact.message);
+    await contactPage.submitButton.click();
+    await expect(
+      page.getByText(
+        testData.successMessage.replace('{forename}', contact.forename),
+      ),
+    ).toBeVisible({ timeout: 30_000 });
+  });
 });
 
 test('Test Case 3 - Test shopping cart functionality', async ({
