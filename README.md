@@ -4,20 +4,20 @@ UI automation for the [Jupiter Toys](https://jupiter.cloud.planittesting.com) te
 
 ## Project structure
 
-| File | Purpose |
-| --- | --- |
-| [ui-tests.test.ts](./tests/ui-tests.test.ts) | Contact validation, successful submission, and shopping/cart tests |
-| [HomePage.ts](./src/pages/HomePage.ts) | Contact and Shop navigation locators |
-| [ContactPage.ts](./src/pages/ContactPage.ts) | Contact fields, Submit, and validation-message locators |
-| [shopPage.ts](./src/pages/shopPage.ts) | Product Buy links and cart price, subtotal, and total locators |
-| [test-data.ts](./src/data/test-data.ts) | Routes, products, expected messages, and Faker-generated contact details |
-| [playwright.config.ts](./playwright.config.ts) | Base URL, Chromium/Firefox projects, execution settings, and HTML reporting |
-| [tsconfig.json](./tsconfig.json) | TypeScript checking settings |
-| [biome.json](./biome.json) | Formatting and lint settings; respects Git ignore rules |
-| [package.json](./package.json) / [package-lock.json](./package-lock.json) | npm scripts, dependencies, and exact resolved dependency versions |
-| [.gitignore](./.gitignore) | Excludes dependencies and generated test artifacts |
-| [playwright.yml](./.github/workflows/playwright.yml) | GitHub Actions pipeline |
-| [Assessment document](<./Planit Technical Assessment Take Home - Feb 2025.docx>) | Original requirements |
+| File                                                                             | Purpose                                                                     |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| [ui-tests.test.ts](./tests/ui-tests.test.ts)                                     | Contact validation, successful submission, and shopping/cart tests          |
+| [HomePage.ts](./src/pages/HomePage.ts)                                           | Contact and Shop navigation locators                                        |
+| [ContactPage.ts](./src/pages/ContactPage.ts)                                     | Contact fields, Submit, and validation-message locators                     |
+| [shopPage.ts](./src/pages/shopPage.ts)                                           | Product Buy links and cart price, subtotal, and total locators              |
+| [test-data.ts](./src/data/test-data.ts)                                          | Routes, products, expected messages, and Faker-generated contact details    |
+| [playwright.config.ts](./playwright.config.ts)                                   | Base URL, Chromium/Firefox projects, execution settings, and HTML reporting |
+| [tsconfig.json](./tsconfig.json)                                                 | TypeScript checking settings                                                |
+| [biome.json](./biome.json)                                                       | Formatting and lint settings; respects Git ignore rules                     |
+| [package.json](./package.json) / [package-lock.json](./package-lock.json)        | npm scripts, dependencies, and exact resolved dependency versions           |
+| [.gitignore](./.gitignore)                                                       | Excludes dependencies and generated test artifacts                          |
+| [playwright.yml](./.github/workflows/playwright.yml)                             | GitHub Actions pipeline                                                     |
+| [Assessment document](<./Planit Technical Assessment Take Home - Feb 2025.docx>) | Original requirements                                                       |
 
 **How it connects:** tests read shared data, use page objects to locate elements, perform browser actions, and assert the results. Page objects return locators; tests call actions such as `.click()` and `.fill()`.
 
@@ -53,32 +53,32 @@ npx playwright test --project=chromium
 npx playwright test --headed --project=chromium --grep "Test Case 3"
 
 # Successful submission: five independent runs without retries
-npx playwright test --project=chromium --repeat-each=5 --retries=0 --grep "Test Case 2"
+npx playwright test --project=chromium --retries=0 --grep "Test Case 2"
 
 # Open the HTML report
 npx playwright show-report
 ```
 
-Use `"Test Case 1"` or `"Test Case 2"` with `--grep` to select another scenario. Add `--workers=1` for sequential execution.
+Use `"Test Case 1"` or `"Test Case 2"` with `--grep` to select another scenario.
 
 The default run is headless. Reports are generated in `playwright-report`, with execution artifacts in `test-results`.
 
 ## Test coverage
 
-| Scenario | Implemented checks |
-| --- | --- |
-| Test Case 1 | Navigate from home to Contact, submit an empty form, and verify required-field error elements and the general warning |
-| Test Case 2 | Generate contact details with Faker, fill mandatory fields, submit, and verify the personalized success message |
+| Scenario    | Implemented checks                                                                                                                                                          |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Test Case 1 | Verify required-field messages and that errors disappear after entering valid data                                                                                          |
+| Test Case 2 | Verify successful contact submission, repeated five times per browser                                                                                                       |
 | Test Case 3 | Buy configured quantities, open Cart, verify product rows and unit prices, check each subtotal against price x quantity, and compare the total with the displayed subtotals |
 
 Current shopping expectations:
 
-| Product | Quantity | Unit price | Subtotal |
-| --- | ---: | ---: | ---: |
-| Stuffed Frog | 2 | $10.99 | $21.98 |
-| Fluffy Bunny | 5 | $9.99 | $49.95 |
-| Valentine Bear | 3 | $14.99 | $44.97 |
-| **Total** | **10** | | **$116.90** |
+| Product        | Quantity | Unit price |    Subtotal |
+| -------------- | -------: | ---------: | ----------: |
+| Stuffed Frog   |        2 |     $10.99 |      $21.98 |
+| Fluffy Bunny   |        5 |      $9.99 |      $49.95 |
+| Valentine Bear |        3 |     $14.99 |      $44.97 |
+| **Total**      |   **10** |            | **$116.90** |
 
 ## Changing products and test data
 
@@ -115,6 +115,6 @@ Biome uses two-space indentation and single quotes. Generated reports are exclud
 
 To run manually, open the repository's **Actions** tab, select **Playwright Tests**, click **Run workflow**, select a branch, and confirm. The manual trigger must first be pushed to the repository's default branch.
 
-Playwright uses one worker and two retries in CI, and rejects `test.only`. Locally, retries are disabled by default.
+Playwright uses one worker locally and in CI. CI enables two retries and rejects `test.only`; locally, retries are disabled by default.
 
-The pipeline does not yet run separate type/lint checks or explicitly repeat Test Case 2 five times. Retries do not replace independent repetitions.
+CI automatically runs the five submission tests defined in the suite. Retries do not replace independent repetitions. The pipeline does not yet run separate type/lint checks.

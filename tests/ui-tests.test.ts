@@ -10,22 +10,29 @@ test('Test Case 1 - Test Contact form validation errors', async ({ page }) => {
   await page.goto(testData.urls.home);
   await homePage.contactLink.click();
   await expect(page).toHaveURL(testData.urls.contact);
-  
+
   // Step 2: Click submit button without filling form
   await contactPage.submitButton.click();
-  
+
   // Step 3: Verify error messages are displayed
   await expect(contactPage.forenameError).toBeVisible();
+  await expect(contactPage.forenameError).toHaveText(
+    testData.errorMessage.forename,
+  );
   await expect(contactPage.emailError).toBeVisible();
+  await expect(contactPage.emailError).toHaveText(testData.errorMessage.email);
   await expect(contactPage.messageTextBoxError).toBeVisible();
+  await expect(contactPage.messageTextBoxError).toHaveText(
+    testData.errorMessage.message,
+  );
   await expect(contactPage.generalError).toBeVisible();
-  
+
   // Step 4: Populate mandatory fields
   const contact = createContactDetails();
   await contactPage.forenameTextbox.fill(contact.forename);
   await contactPage.emailTextbox.fill(contact.email);
   await contactPage.messageTextbox.fill(contact.message);
-  
+
   // Step 5: Validate errors are gone
   await expect(contactPage.forenameError).not.toBeVisible();
   await expect(contactPage.emailError).not.toBeVisible();
@@ -34,7 +41,9 @@ test('Test Case 1 - Test Contact form validation errors', async ({ page }) => {
 });
 
 Array.from({ length: 5 }, (_, i) => i + 1).forEach((runNumber) => {
-  test(`Test Case 2 - Test successful contact form submission (Run ${runNumber})`, async ({ page }) => {
+  test(`Test Case 2 - Test successful contact form submission (Run ${runNumber})`, async ({
+    page,
+  }) => {
     const homePage = new HomePage(page);
     const contactPage = new ContactPage(page);
     const contact = createContactDetails();
@@ -53,9 +62,7 @@ Array.from({ length: 5 }, (_, i) => i + 1).forEach((runNumber) => {
   });
 });
 
-test('Test Case 3 - Test shopping cart functionality', async ({
-  page,
-}) => {
+test('Test Case 3 - Test shopping cart functionality', async ({ page }) => {
   const homePage = new HomePage(page);
   await page.goto(testData.urls.home);
   const shopPage = new ShopPage(page);
@@ -95,4 +102,3 @@ test('Test Case 3 - Test shopping cart functionality', async ({
   const totalText = await shopPage.cartTotal.innerText();
   expect(Number(totalText.replace('Total: ', ''))).toBeCloseTo(sumOfSubtotals);
 });
- 
